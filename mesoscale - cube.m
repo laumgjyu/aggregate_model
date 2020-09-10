@@ -1,48 +1,48 @@
 clear
 clc
-model_width=250;% ¹ÇÁÏËùÍ¶·Å¿Õ¼äµÄ¿í
-model_height=25;% ¹ÇÁÏËùÍ¶·Å¿Õ¼äµÄ¸ß
-model_length=25;% ¹ÇÁÏËùÍ¶·Å¿Õ¼äµÄ³¤
-model_geometry=model_width * model_height * model_length;% ¹ÇÁÏËùÍ¶·Å¿Õ¼äµÄÌå»ı£¬¹ÇÁÏÍ¶·ÅµÄ¿Õ¼äÊÇÒ»¸öÁ¢·½Ìå
-aggregate_ratio=0.45;% ¹ÇÁÏµÄÌå»ıÕ¼Ä£ĞÍ¼¸ºÎ×ÜÌå»ıµÄ±ÈÀı
+model_width=25;% éª¨æ–™æ‰€æŠ•æ”¾ç©ºé—´çš„å®½
+model_height=25;% éª¨æ–™æ‰€æŠ•æ”¾ç©ºé—´çš„é«˜
+model_length=25;% éª¨æ–™æ‰€æŠ•æ”¾ç©ºé—´çš„é•¿
+model_geometry=model_width * model_height * model_length;% éª¨æ–™æ‰€æŠ•æ”¾ç©ºé—´çš„ä½“ç§¯ï¼Œéª¨æ–™æŠ•æ”¾çš„ç©ºé—´æ˜¯ä¸€ä¸ªç«‹æ–¹ä½“
+aggregate_ratio=0.45;% éª¨æ–™çš„ä½“ç§¯å æ¨¡å‹å‡ ä½•æ€»ä½“ç§¯çš„æ¯”ä¾‹
 model_geometry_for_aggregate=aggregate_ratio * model_geometry;
-aggregate_diameter=[5 10 15 20];%´Ö¹ÇÁÏÁ£¾¶·Ö²¼
-max_aggregate_diameter=max(aggregate_diameter);%´Ö¹ÇÁÏ×î´óÁ£¾¶
-aggregate_volu=100*sqrt(aggregate_diameter/max_aggregate_diameter);%¸»ÀÕÇúÏßÈ·¶¨´Ö¹ÇÁÏÌå»ı±È
-aggregate_volu_ratio=diff(aggregate_volu)/sum(diff(aggregate_volu));%È·¶¨5-10,10-15,15-20¸÷¹ÇÁÏÁ£¾¶·¶Î§Ìå»ı±È
+aggregate_diameter=[5 10 15 20];%ç²—éª¨æ–™ç²’å¾„åˆ†å¸ƒ
+max_aggregate_diameter=max(aggregate_diameter);%ç²—éª¨æ–™æœ€å¤§ç²’å¾„
+aggregate_volu=100*sqrt(aggregate_diameter/max_aggregate_diameter);%å¯Œå‹’æ›²çº¿ç¡®å®šç²—éª¨æ–™ä½“ç§¯æ¯”
+aggregate_volu_ratio=diff(aggregate_volu)/sum(diff(aggregate_volu));%ç¡®å®š5-10,10-15,15-20å„éª¨æ–™ç²’å¾„èŒƒå›´ä½“ç§¯æ¯”
 
 for j = 1:1:length(aggregate_volu_ratio);
-    aggregate_sum_volu=0;% µ±Ç°Á£¾¶·¶Î§ÏÂÉú³ÉµÄ¸÷¸ö¹ÇÁÏ×ÜÌå»ı
-    num=0;% µ±Ç°Á£¾¶·¶Î§ÏÂÉú³ÉµÄ·ûºÏÌõ¼şµÄ¹ÇÁÏµÄÊıÄ¿
-    while aggregate_sum_volu < model_geometry_for_aggregate*aggregate_volu_ratio(j);%Éú³É5-10mm¹ÇÁÏ
+    aggregate_sum_volu=0;% å½“å‰ç²’å¾„èŒƒå›´ä¸‹ç”Ÿæˆçš„å„ä¸ªéª¨æ–™æ€»ä½“ç§¯
+    num=0;% å½“å‰ç²’å¾„èŒƒå›´ä¸‹ç”Ÿæˆçš„ç¬¦åˆæ¡ä»¶çš„éª¨æ–™çš„æ•°ç›®
+    while aggregate_sum_volu < model_geometry_for_aggregate*aggregate_volu_ratio(j);%ç”Ÿæˆ5-10mméª¨æ–™
           num=num+1;
-          r(j,num)=aggregate_diameter(j)/2+rand(1)*(aggregate_diameter(j+1)-aggregate_diameter(j))/2;% ¼ÆËãµ±Ç°Á£¾¶·¶Î§ÏÂ·ûºÏÌõ¼şµÄµÚnum¸ö¹ÇÁÏµÄËæ»ú°ë¾¶
+          r(j,num)=aggregate_diameter(j)/2+rand(1)*(aggregate_diameter(j+1)-aggregate_diameter(j))/2;% è®¡ç®—å½“å‰ç²’å¾„èŒƒå›´ä¸‹ç¬¦åˆæ¡ä»¶çš„ç¬¬numä¸ªéª¨æ–™çš„éšæœºåŠå¾„
           r_volu=4/3*pi*r(j,num)^3;
           aggregate_sum_volu=aggregate_sum_volu+r_volu;
     end
 end
 
-aggregate_database=r(:); %½«rÖĞËùÓĞµÄÁĞÆ´½Ó³ÉÎªÒ»¸öÁĞÏòÁ¿
+aggregate_database=r(:); %å°†rä¸­æ‰€æœ‰çš„åˆ—æ‹¼æ¥æˆä¸ºä¸€ä¸ªåˆ—å‘é‡
 aggregate_database=sort(aggregate_database,'descend');
-aggregate_database(aggregate_database==0)=[];  %½«aggregate_databaseÖĞÎª0µÄĞĞÉ¾³ı£¬Éú³É¹ÇÁÏÍ¶·Å¿â£¬Í¶·Å¿âÖĞÎÀÎª·ûºÏÒªÇóµÄÁ£¾¶
+aggregate_database(aggregate_database==0)=[];  %å°†aggregate_databaseä¸­ä¸º0çš„è¡Œåˆ é™¤ï¼Œç”Ÿæˆéª¨æ–™æŠ•æ”¾åº“ï¼ŒæŠ•æ”¾åº“ä¸­å«ä¸ºç¬¦åˆè¦æ±‚çš„ç²’å¾„
 
-% Ñ°ÕÒµÚÒ»¸ö¹ÇÁÏµÄÍ¶·ÅÎ»ÖÃ
+% å¯»æ‰¾ç¬¬ä¸€ä¸ªéª¨æ–™çš„æŠ•æ”¾ä½ç½®
 flag=0;
 while flag<1
     rand_num=rand(3,1);
     if model_width*(1-rand_num(1))>aggregate_database(1)&& model_width*rand_num(1)>aggregate_database(1)&& model_height*(1-rand_num(2))+3>aggregate_database(1)&&model_height*rand_num(2)>aggregate_database(1)...
         &&model_length*(1-rand_num(3))>aggregate_database(1)&&model_length*rand_num(3)>aggregate_database(1);
        flag=1;
-       aggregate_position=[model_width*rand_num(1) model_height*rand_num(2) model_length*rand_num(3) aggregate_database(1)];% Í¶·ÅµÚÒ»¸ö¹ÇÁÏ
+       aggregate_position=[model_width*rand_num(1) model_height*rand_num(2) model_length*rand_num(3) aggregate_database(1)];% æŠ•æ”¾ç¬¬ä¸€ä¸ªéª¨æ–™
     end
 end
 
-hwait=waitbar(0,'ÇëµÈ´ı>>>>>>>>');
+hwait=waitbar(0,'è¯·ç­‰å¾…>>>>>>>>');
 
-%Ñ°ÕÒÊ£Óà¹ÇÁÏµÄÍ¶·ÅÎ»ÖÃ
+%å¯»æ‰¾å‰©ä½™éª¨æ–™çš„æŠ•æ”¾ä½ç½®
 for i=2:1:length(aggregate_database)
-    flag=0; %ÓÃÓÚÅĞ¶ÏÊÇ·ñÑ°ÕÒµ½
-    endflag=0; %ÓÃÓÚÅĞ¶ÏÑ°ÕÒ¶àÉÙ´ÎÎ´¹û½áÊø
+    flag=0; %ç”¨äºåˆ¤æ–­æ˜¯å¦å¯»æ‰¾åˆ°
+    endflag=0; %ç”¨äºåˆ¤æ–­å¯»æ‰¾å¤šå°‘æ¬¡æœªæœç»“æŸ
     while flag<1
         k=0;
         endflag=endflag+1;
@@ -51,19 +51,19 @@ for i=2:1:length(aggregate_database)
         
         if model_width*(1-rand_num(1))>aggregate_database(i)&& model_width*rand_num(1)>aggregate_database(i)&&model_length*(1-rand_num(3))>aggregate_database(i)&&model_length*rand_num(3)>aggregate_database(i)...
            &&model_height*(1-rand_num(2))+3>aggregate_database(i)&&model_height*rand_num(2)>aggregate_database(i)
-           % µ±Ç°¹ÇÁÏÍ¶·ÅÎ»ÖÃÔÚmodelÄÚ
+           % å½“å‰éª¨æ–™æŠ•æ”¾ä½ç½®åœ¨modelå†…
            for m=1:1:size(aggregate_position,1)
                temp(m)=sqrt(sum((aggregate_position_temp-aggregate_position(m,1:3)).^2));
                if temp(m)<aggregate_database(m)+aggregate_position(m,4)
-                  % µ±Ç°¹ÇÁÏÍ¶·ÅÎ»ÖÃ»áÓëÆäËû¹ÇÁÏÖØºÏ£¬Ìø³öÑ­»·ÖØĞÂÑ¡Ôñµ±Ç°¹ÇÁÏÎ»ÖÃ
+                  % å½“å‰éª¨æ–™æŠ•æ”¾ä½ç½®ä¼šä¸å…¶ä»–éª¨æ–™é‡åˆï¼Œè·³å‡ºå¾ªç¯é‡æ–°é€‰æ‹©å½“å‰éª¨æ–™ä½ç½®
                   break;
                end
-               k=k+1; % µ±Ç°¹ÇÁÏÎ»ÖÃ·ûºÏÒªÇó£¬ÊıÁ¿+1
+               k=k+1; % å½“å‰éª¨æ–™ä½ç½®ç¬¦åˆè¦æ±‚ï¼Œæ•°é‡+1
            end
         end
         
         if k==size(aggregate_position,1)
-            % ÕÒµ½Ò»¸öĞÂµÄ¿ÉÍ¶·Å¹ÇÁÏ£¬½øĞĞ±£´æ
+            % æ‰¾åˆ°ä¸€ä¸ªæ–°çš„å¯æŠ•æ”¾éª¨æ–™ï¼Œè¿›è¡Œä¿å­˜
             aggregate_position=[aggregate_position;aggregate_position_temp aggregate_database(i)];
             flag=1;
         elseif endflag==10000
@@ -75,7 +75,7 @@ for i=2:1:length(aggregate_database)
     end  
     
    process_ratio=i/length(aggregate_database);
-   str=['ÕıÔÚÔËĞĞÖĞ',num2str(i),'/',num2str(length(aggregate_database))];
+   str=['æ­£åœ¨è¿è¡Œä¸­',num2str(i),'/',num2str(length(aggregate_database))];
    waitbar(process_ratio,hwait,str);
 end
 close(hwait);
